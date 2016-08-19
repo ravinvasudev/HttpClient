@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.gson.JsonObject;
 
-import rv.httpclient.util.HttpHeader;
 import rv.httpclient.util.HttpMethod;
 import rv.httpclient.util.Validator;
 import rv.httpclient.util.Validator.Key;
@@ -25,7 +24,7 @@ import rv.httpclient.util.Validator.Key;
 public final class HttpPost {
 
 	private String url;
-	private Map<HttpHeader, String> headers;
+	private Map<String, String> headers;
 	private Map<String, String> queryParams;
 	private String requestBody;
 
@@ -35,7 +34,7 @@ public final class HttpPost {
 	 * @param headers
 	 *            - Map of key-value pair of request headers.
 	 */
-	public void setHeaders(Map<HttpHeader, String> headers) {
+	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 	}
 
@@ -47,10 +46,10 @@ public final class HttpPost {
 	 * @param value
 	 *            - header vaue
 	 */
-	public void addHeader(HttpHeader key, String value) {
+	public void addHeader(String key, String value) {
 		if (key != null && !key.isEmpty() && value != null && !value.isEmpty()) {
 			if (this.headers == null) {
-				this.headers = new HashMap<HttpHeader, String>();
+				this.headers = new HashMap<String, String>();
 			}
 			this.headers.put(key, value);
 		}
@@ -145,7 +144,7 @@ public final class HttpPost {
 	 * @return RestResponse - response returned by server
 	 * @throws HttpClientException
 	 */
-	public HttpResponse execute(String url, Map<HttpHeader, String> headers, String requestBody)
+	public HttpResponse execute(String url, Map<String, String> headers, String requestBody)
 			throws HttpClientException {
 		Validator.validateParam(Key.URL, url);
 		Validator.validateHeaders(Key.HEADERS, headers);
@@ -172,7 +171,7 @@ public final class HttpPost {
 	 * @return RestResponse - response returned by server
 	 * @throws HttpClientException
 	 */
-	public HttpResponse execute(String url, Map<HttpHeader, String> headers, JsonObject requestBody)
+	public HttpResponse execute(String url, Map<String, String> headers, JsonObject requestBody)
 			throws HttpClientException {
 		Validator.validateParam(Key.URL, url);
 		Validator.validateHeaders(Key.HEADERS, headers);
@@ -184,7 +183,7 @@ public final class HttpPost {
 		this.url = url;
 		this.headers = headers;
 		this.requestBody = requestBody.toString();
-		return execute();		
+		return execute();
 	}
 
 	/**

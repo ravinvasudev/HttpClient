@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.gson.JsonObject;
 
-import rv.httpclient.util.HttpHeader;
 import rv.httpclient.util.HttpMethod;
 import rv.httpclient.util.Validator;
 import rv.httpclient.util.Validator.Key;
@@ -26,7 +25,8 @@ public final class HttpRequest {
 
 	private String url;
 	private HttpMethod httpMethod;
-	private Map<HttpHeader, String> headers;
+	/*private Map<HttpHeader, String> headers;*/
+	private Map<String, String> headers;	
 	private Map<String, String> queryParams;
 	private String requestBody;
 
@@ -57,10 +57,10 @@ public final class HttpRequest {
 	 * @param headers
 	 *            - Map of key-value pair of request headers.
 	 */
-	public void setHeaders(Map<HttpHeader, String> headers) {
+	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
 	}
-
+	
 	/**
 	 * Set the HTTP Header.
 	 * 
@@ -69,10 +69,10 @@ public final class HttpRequest {
 	 * @param value
 	 *            - header vaue
 	 */
-	public void addHeader(HttpHeader key, String value) {
+	public void addHeader(String key, String value) {
 		if (key != null && !key.isEmpty() && value != null && !value.isEmpty()) {
 			if (this.headers == null) {
-				this.headers = new HashMap<HttpHeader, String>();
+				this.headers = new HashMap<String, String>();
 			}
 			this.headers.put(key, value);
 		}
@@ -171,7 +171,7 @@ public final class HttpRequest {
 	 * @throws HttpClientException
 	 */
 	public HttpResponse execute(String url, HttpMethod httpMethod, Map<String, String> queryParams,
-			Map<HttpHeader, String> headers, String requestBody) throws HttpClientException {
+			Map<String, String> headers, String requestBody) throws HttpClientException {
 		Validator.validateParam(Key.URL, url);
 		Validator.validateSpecialParam(Key.HTTP_METHOD, httpMethod);
 		Validator.validateQueryParam(Key.QUERY_PARAM, queryParams);
@@ -205,7 +205,7 @@ public final class HttpRequest {
 	 * @throws HttpClientException
 	 */
 	public HttpResponse execute(String url, HttpMethod httpMethod, Map<String, String> queryParams,
-			Map<HttpHeader, String> headers, JsonObject requestBody) throws HttpClientException {
+			Map<String, String> headers, JsonObject requestBody) throws HttpClientException {
 		Validator.validateParam(Key.URL, url);
 		Validator.validateSpecialParam(Key.HTTP_METHOD, httpMethod);
 		Validator.validateQueryParam(Key.QUERY_PARAM, queryParams);
