@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonObject;
 
-import rv.httpclient.util.HttpHeader;
 import rv.httpclient.util.HttpMethod;
 import rv.httpclient.util.ResponseCode;
 import rv.httpclient.util.Status;
@@ -110,13 +109,13 @@ public final class HttpConnection {
 	 *            - http headers to add
 	 * @throws HttpClientException
 	 */
-	public void addHeaders(final Map<HttpHeader, String> headers) throws HttpClientException {
+	public void addHeaders(final Map<String, String> headers) throws HttpClientException {
 		if (headers != null && !headers.isEmpty()) {
-			final Iterator<Entry<HttpHeader, String>> it = headers.entrySet().iterator();
+			final Iterator<Entry<String, String>> it = headers.entrySet().iterator();
 			while (it.hasNext()) {
-				final Entry<HttpHeader, String> entry = it.next();
+				final Entry<String, String> entry = it.next();
 				try {
-					final String key = entry.getKey() != null ? entry.getKey().get() : null;
+					final String key = entry.getKey() != null ? entry.getKey() : null;
 					if (key != null) {
 						conn.setRequestProperty(key, entry.getValue());
 					}
